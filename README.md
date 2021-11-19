@@ -3,34 +3,33 @@
 
 ### Description
 ---
-The Heisman Trophy is the penultimate award for NCAA college football that supposedly is awarded to the best football player of the year. Which players are in the running is a common topic of discussion in the sports media and online forums. This project seeks to use data related to player statistics, specifically passing, rushing and receiving data and college team data to predict which College football player is mostly likely going to win the Heisman Trophy.
+As Hip hop cements its position as the popular genre of music in the United States , it is important to understand the forces that propelled it from relatively obscure beginnings in the Bronx to world status. One of these forces is lyrics. Past studies have found that Hip Hop songs have more lyrical variety and larger vocabulary than other popular genres such as Rock or Pop. One element of lyricism that is different from other forms of popular music is the element of personal voice in the lyrics. Hip Hop lyrics are almost always written by the artist performing the song or at least written from the artist's perspective. The goal of this project is to build a model that predicts the given artist given the lyrics to better understand the lyricism of different artists. 
 
 
-### Why is this important?
+### Web Scrapping
 ---
-As with anything in the sports world, there is a sports betting aspect to the Heisman Trophy winner. So being able to predict the winner provides value to the sports betting industry. Aside from this, the Trophy is a prestigious award that generates millions in ad revenue and eventual life changing fame and marketing revenue for the winner. Media outlets cover and provide projections throughout the season, so tracking, following, and predicting the Heisman winner is very relevant to the College Football season.
+Lyric data was scraped from Genius API using the python wrapper LyricsGenius. I decided to use the top ten most popular songs from the top fitly artist due to time and memory constraints. To get info on artist popularity I scraped web data from billboard. 
 
 
 ### Modeling
 ---
-The data we used for this project was web scraped from the website Sports Reference. Because defensive players are rarely represented in the Heisman top ten, we decided to exclude them from our data set and not consider defensive statistics. Additionally, we decided to focus on only the last twenty years of data (2000 - 2020) both due to time constraints and also because comparing years more than 20 years apart might affect the model due to changes in the game of college football. 
+Neural Nets, Ada Booost and Random Forest were used. Random Ferest had the best results at 0.35 testing accuracy.
 
-On Sports Reference, player data is divided into three sections: top players for passing, rushing, and receiving. The amount of players in each section varies by year, usually between 100-500 players per section. We used a request to scrape the data from the website and created a function to parse through the html and formulate it into a dataframe. In addition to player data, we also scraped team win-loss records and Hesiman voting results per year. Heisman trophy winners are elected through a voting process with the top ten players being displayed on the website. We scraped this data as our target variable. We concated all data until we had one data set per year and a data set with all the years. Some player names had a star next to them indicating if their data included postseason games so we removed the star with the replace function. We also converted all the data types to numeric data as it was originally all object data type. 
-
-
-### Conclution
+### Text Generation 
 ---
-We decided to predict 3 years to test the accuracy of our models. From our research we know that 2019 was the easiest year to predict because the winner won the award by the largest margin in the 86 year history of the Heisman Trophy. In 2020 the winner was a Wide Receiver where only 4 WR have won the award in the 86 year history of the Heisman Trophy and the last time a WR won was 1991 (almost 30 years). Lastly, we will attempt to predict the future 2021 winner based on up to date statistics after games were completed on October 23rd. Thus, we will be predicting the easiest year, the hardest year, and the unknown future year.
+A fake song was created with just Playboi Carti lyrics with Markovify. Urberduck was used to fake the voice.
 
-We explored the data using various Machine Learning models. We grouped these models into 3 categories: Linear Regression/Ridge/LASSO, KNN/Random Forrest/Boosting, and Neural Networks. For 2019, the LASSO, AdaBoost, and Neural Network models were able to predict the winner. For 9 offensive players in the 2019 top 10, LASSO could only predict 4 of the top 9 offensive voted players, AdaBoost could only predict 7 of the top 9, and Neural Network could only predict 7 of the top 9. For 2020, the LASSO, AdaBoost, and Neural Network models were not able to predict the winner with any model with Neural Networks and LASSO able to predict the winner as finishing 3rd place. For 10 offensive players in the 2020 top 10, LASSO could only predict 5 of the top 10 offensive voted players, AdaBoost could only predict 9 of the top 10, and Neural Network could only predict 6 of the top 10. For 2021, only the LASSO model was able to predict the player with the best projected odds through October 23rd. For the players with the 10 best odds at winning the 2021 Heisman Trophy, LASSO could only predict 3 of the top 10 players, AdaBoost could only predict 4 of the top 10, and Neural Network could only predict 3 of the top 10.
 
-We have a model that can accurately predict the winner for a year when the winner won by the largest margin like 2019 with all considered models. When the front runner is a Wide Receiver like 2020 the best we can do is place him 3rd with a Neural Network and LASSO. For predicting the future winner in 2021 we can predict the current best odds player with a LASSO model. 
 
 
 ### Software Requirements
 ---
 Web scraping: requests, lxml, beautiful soup and pandas, 
 Modeling: pandas, tensorflow, keras, matplotlib, sklearn, and numpy
+Text Generation: Markovify
+
+Uberduck:https://uberduck.ai/#voice=playboicarti&mode=tts-basic
+
 
 
 ### Dictionaries
@@ -49,9 +48,9 @@ Modeling: pandas, tensorflow, keras, matplotlib, sklearn, and numpy
 
 |Folder Name|Description|
 |---|---|
-|Heisman Voting|Top 10 Heisman voting results by year|
-|Passing|Passing data by year|
-|Receiving|Receiving data by year|
-|Rushing|Rushing data by year|
-|Standings|Complete standings data for each team by year|
-|Year|All voting, passing, receiving, rushing, and standings data compiled by year|
+|Carti_text|Carti Text for Markov|
+|Clean_lyrics|clean lyrics for EDA|
+|English|list of explatives in english|
+|Lyrics_all_1|transformed lyrics|
+|Lyrics_corpus|lyrics in text format for Markov|
+|lyrics|Raw Lyrics|
